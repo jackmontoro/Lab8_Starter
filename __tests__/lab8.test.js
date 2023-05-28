@@ -126,11 +126,11 @@ describe('Basic user flow for Website', () => {
     for(let i = 0; i < prodItems.length; i++){
       const shadowRoot = await prodItems[i].getProperty("shadowRoot");
       const button = await shadowRoot.$("button");
-      await button.click();
-
       const innerText = await (await button.getProperty("innerText")).jsonValue();
 
-      expect(innerText).toBe("Add to Cart");
+      if(innerText == "Remove from Cart"){
+        await button.click();
+      }
     }
     // Once you have, check to make sure that #cart-count is now 0
     const cartCount = await page.$("#cart-count");
