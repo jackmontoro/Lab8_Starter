@@ -24,7 +24,7 @@ describe('Basic user flow for Website', () => {
     // Query select all of the <product-item> elements
     const prodItems = await page.$$('product-item');
     for (const [index, prodItem] of prodItems.entries()) {
-      console.log(`Checking product item ${index + 1}}/${prodItems.length}`);
+      console.log(`Checking product item ${index + 1}/${prodItems.length}`);
       // Grab the .data property of <product-items> to grab all of the json data stored inside
       data = await prodItem.getProperty('data');
       // Convert that property to JSON
@@ -43,22 +43,40 @@ describe('Basic user flow for Website', () => {
   // the button swaps to "Remove from Cart"
   it('Clicking the "Add to Cart" button should change button text', async () => {
     console.log('Checking the "Add to Cart" button...');
-    // TODO - Step 2
+    // Step 2
     // Query a <product-item> element using puppeteer ( checkout page.$() and page.$$() in the docs )
     const prodItem = await page.$("product-item");
     // Grab the shadowRoot of that element (it's a property), then query a button from that shadowRoot.
+    const shadowRoot = await prodItem.getProperty("shadowRoot");
+    const button = await shadowRoot.$("button");
     // Once you have the button, you can click it and check the innerText property of the button.
+    await button.click();
+    const innerText = await button.getProperty("innerText");
     // Once you have the innerText property, use innerText.jsonValue() to get the text value of it
+    const jsonValue = await innerText.jsonValue();
+
+    expect(jsonValue).toBe("Remove from Cart");
   }, 2500);
 
   // Check to make sure that after clicking "Add to Cart" on every <product-item> that the Cart
   // number in the top right has been correctly updated
   it('Checking number of items in cart on screen', async () => {
     console.log('Checking number of items in cart on screen...');
-    // TODO - Step 3
+    // Step 3
     // Query select all of the <product-item> elements, then for every single product element
+    const prodItems = await page.$$("product-item");
     // get the shadowRoot and query select the button inside, and click on it.
+    for (const prodItem of prodItems){
+      const shadowRoot = await prodItem.getProperty("shadowRoot");
+      const button = await shadowRoot.$("button");
+      await button.click();
+    }
     // Check to see if the innerText of #cart-count is 20
+    const cartCount = await page.$("#cart-count");
+    const innerText = await cartCount.getProperty("innerText");
+    const jsonValue = await innerText.jsonValue();
+
+    expect(jsonValue).toBe("20");
   }, 10000);
 
   // Check to make sure that after you reload the page it remembers all of the items in your cart
