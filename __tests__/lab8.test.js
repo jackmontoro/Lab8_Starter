@@ -68,8 +68,8 @@ describe('Basic user flow for Website', () => {
     // Query select all of the <product-item> elements, then for every single product element
     const prodItems = await page.$$("product-item");
     // get the shadowRoot and query select the button inside, and click on it.
-    for (const prodItem of prodItems){
-      const shadowRoot = await prodItem.getProperty("shadowRoot");
+    for (let i = 0; i < prodItems.length; i++){
+      const shadowRoot = await prodItems[i].getProperty("shadowRoot");
       const button = await shadowRoot.$("button");
       await button.click();
     }
@@ -89,8 +89,8 @@ describe('Basic user flow for Website', () => {
     // Select all of the <product-item> elements, and check 
     // every element to make sure that all of their buttons say "Remove from Cart".
     const prodItems = page.$$("product-item");
-    for(const prodItem of prodItems){
-      const shadowRoot = await prodItem.getProperty("shadowRoot");
+    for(let i = 0; i < prodItems.length; i++){
+      const shadowRoot = await prodItems[i].getProperty("shadowRoot");
       const button = await shadowRoot.$("button");
       await button.click();
 
@@ -123,8 +123,8 @@ describe('Basic user flow for Website', () => {
     // Step 6
     // Go through and click "Remove from Cart" on every single <product-item>, just like above.
     const prodItems = page.$$("product-item");
-    for(const prodItem of prodItems){
-      const shadowRoot = await prodItem.getProperty("shadowRoot");
+    for(let i = 0; i < prodItems.length; i++){
+      const shadowRoot = await prodItems[i].getProperty("shadowRoot");
       const button = await shadowRoot.$("button");
       await button.click();
 
@@ -148,8 +148,8 @@ describe('Basic user flow for Website', () => {
     // is in the cart - do this by checking the text on the buttons so that they should say "Add to Cart".
     await page.reload();
     const prodItems = page.$$("product-item");
-    for(const prodItem of prodItems){
-      const shadowRoot = await prodItem.getProperty("shadowRoot");
+    for(let i = 0; i < prodItems.length; i++){
+      const shadowRoot = await prodItems[i].getProperty("shadowRoot");
       const button = await shadowRoot.$("button");
       const innerText = await (await button.getProperty("innerText")).jsonValue();
 
