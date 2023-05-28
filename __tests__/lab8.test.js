@@ -56,6 +56,9 @@ describe('Basic user flow for Website', () => {
     const jsonValue = await innerText.jsonValue();
 
     expect(jsonValue).toBe("Remove from Cart");
+
+    // Reset button value
+    await button.click();
   }, 2500);
 
   // Check to make sure that after clicking "Add to Cart" on every <product-item> that the Cart
@@ -82,17 +85,39 @@ describe('Basic user flow for Website', () => {
   // Check to make sure that after you reload the page it remembers all of the items in your cart
   it('Checking number of items in cart on screen after reload', async () => {
     console.log('Checking number of items in cart on screen after reload...');
-    // TODO - Step 4
-    // Reload the page, then select all of the <product-item> elements, and check every
-    // element to make sure that all of their buttons say "Remove from Cart".
+    // Step 4
+    // Reload the page
+    await page.reload();
+    // Select all of the <product-item> elements, and check 
+    // every element to make sure that all of their buttons say "Remove from Cart".
+    const prodItems = page.$$("product-item");
+    for(prodItem of prodItems){
+      const shadowRoot = await prodItem.getProperty("shadowRoot");
+      const button = await shadowRoot.$("button");
+      await button.click();
+
+      const innerText = await button.getProperty("innerText");
+      const jsonValue = await innerText.jsonValue();
+
+      expect(jsonValue).toBe("Remove from Cart");
+    }
     // Also check to make sure that #cart-count is still 20
+    const cartCount = await page.$("#cart-count");
+    const innerText = await cartCount.getProperty("innerText");
+    const jsonValue = await innerText.jsonValue();
+
+    expect(jsonValue).toBe("20");
   }, 10000);
 
   // Check to make sure that the cart in localStorage is what you expect
   it('Checking the localStorage to make sure cart is correct', async () => {
-    // TODO - Step 5
+    // Step 5
     // At this point he item 'cart' in localStorage should be 
     // '[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]', check to make sure it is
+    const cart = await page.evaluate(function(){
+      return localStorage.getItem("cart");
+    });
+    expect(cart).toBe("[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]");
   });
 
   // Checking to make sure that if you remove all of the items from the cart that the cart
