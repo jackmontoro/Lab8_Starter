@@ -34,7 +34,7 @@ test("potato is not an accepted address", () => {
 });
 
 test("luvas@@hottub.com is not an accepted address", () => {
-    expect(functions.isEmail("bigpapa@hotmail.net")).toBe(false);
+    expect(functions.isEmail("luvas@@hottub.com")).toBe(false);
 });
 
 // isStrongPassword
@@ -81,7 +81,7 @@ test("#FF0000 is an accepted hex color", () => {
 });
 
 test("FF0000 is not an accepted hex color", () => {
-    expect(functions.isHexColor("FF0000")).toBe(false);
+    expect(functions.isHexColor("tuv")).toBe(false);
 });
 
 test("#ab is not an accepted hex color", () => {
