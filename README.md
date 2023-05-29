@@ -6,3 +6,5 @@ Jack Montoro
 3. I would not set up unit tests to test a messaging feature because this would potentially require tracking multiple which seems outside the scope of simple unit tests.
 4. Develop a unit test where you attempt to send a message longer than 80 characters, and develop a test to check if the program properly cuts the message off.
 
+[otherTests](otherTests.png)
+[lab8tests](lab8tests.png)
