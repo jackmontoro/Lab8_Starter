@@ -2,7 +2,7 @@
 
 const functions = require('../code-to-unit-test/unit-test-me.js');
 
-// TODO - Part 2
+// Part 2
 // isPhoneNumber()
 test("851-353-4678 is an accepted number", () => {
     expect(functions.isPhoneNumber("851-353-4678")).toBe(true);
@@ -22,19 +22,19 @@ test("452 367 8967 is not an accepted number", () => {
 
 // isEmail
 test("bigpapa@gmail.com is an accepted address", () => {
-    expect(functions.isPhoneNumber("bigpapa@gmail.com")).toBe(true);
+    expect(functions.isEmail("bigpapa@gmail.com")).toBe(true);
 });
 
 test("bigpapa@hotmail.net is an accepted address", () => {
-    expect(functions.isPhoneNumber("bigpapa@hotmail.net")).toBe(true);
+    expect(functions.isEmail("bigpapa@hotmail.net")).toBe(true);
 });
 
 test("potato is not an accepted address", () => {
-    expect(functions.isPhoneNumber("potato")).toBe(false);
+    expect(functions.isEmail("potato")).toBe(false);
 });
 
 test("luvas@@hottub.com is not an accepted address", () => {
-    expect(functions.isPhoneNumber("bigpapa@hotmail.net")).toBe(false);
+    expect(functions.isEmail("bigpapa@hotmail.net")).toBe(false);
 });
 
 // isStrongPassword
